@@ -660,7 +660,7 @@ def main():
     tg_token = os.getenv("TG_BOT_TOKEN")
     tg_chat_id = os.getenv("TG_CHAT_ID")
     renew_url = os.getenv("RENEW_LINK")
-    if not RENEW_URLS:
+    if not renew_url:
         log("请在 renew_url 列表中添加续期链接", "ERROR")
         sys.exit(1)
 
