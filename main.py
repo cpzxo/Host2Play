@@ -19,10 +19,6 @@ except ImportError:
 # ==============================================================================
 # 配置区域
 # ==============================================================================
-RENEW_URLS = [
-    "https://host2play.gratis/server/renew?i=0fac8cba-9c75-4274-b6ad-ae3a9cde031e",
-    # 添加更多链接
-]
 
 MAX_CAPTCHA = 1
 MAX_RENEW_RETRIES_PER_URL = 100
@@ -663,12 +659,13 @@ def renew_single_url(url):
 def main():
     tg_token = os.getenv("TG_BOT_TOKEN")
     tg_chat_id = os.getenv("TG_CHAT_ID")
+    renew_url = os.getenv("RENEW_LINK")
     if not RENEW_URLS:
-        log("请在 RENEW_URLS 列表中添加续期链接", "ERROR")
+        log("请在 renew_url 列表中添加续期链接", "ERROR")
         sys.exit(1)
 
     total_success = 0
-    for idx, url in enumerate(RENEW_URLS, 1):
+    for idx, url in enumerate(renew_url, 1):
         log(f"{'#'*60}")
         log(f"处理第 {idx} 个链接: {url}")
         log(f"{'#'*60}")
@@ -683,8 +680,8 @@ def main():
 
         send_tg_photo(tg_token, tg_chat_id, screenshot, caption, parse_mode='HTML')
 
-    log(f"全部完成，成功 {total_success}/{len(RENEW_URLS)} 个链接")
-    if total_success < len(RENEW_URLS):
+    log(f"全部完成，成功 {total_success}/{len(renew_url)} 个链接")
+    if total_success < len(renew_url):
         sys.exit(1)
 
 if __name__ == "__main__":
